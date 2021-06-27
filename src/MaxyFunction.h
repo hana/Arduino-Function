@@ -2,6 +2,8 @@
 
 #include <ArxContainer.h>
 
+// FOO
+
 namespace Maxy {
     class Function {
         public:
