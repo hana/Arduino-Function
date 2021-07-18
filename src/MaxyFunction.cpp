@@ -1,4 +1,4 @@
-#include "MaxyFunction.h"
+#include "MaxyFunction.hpp"
 
 using namespace Maxy;
 

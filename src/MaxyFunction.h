@@ -2,26 +2,24 @@
 
 #include <ArxContainer.h>
 
-// FOO
-
 namespace Maxy {
     class Function {
         public:
             struct TimePoint {
-                unsigned int duration;
-                float duration_reciprocal;
-                unsigned int endTime;
-                // float beginValue;  // goal   
-                float endValue;                        
-                float diff;   // difference from the previous value
-                // unsigned long beginTime;                
+                    unsigned int duration;
+                    float duration_reciprocal;
+                    unsigned int endTime;
+                    // float beginValue;  // goal   
+                    float endValue;                        
+                    float diff;   // difference from the previous value
+                    // unsigned long beginTime;         
             };
 
             Function();
             void add(const float val, const unsigned long duration);
             void begin(const bool _loop = false);
             float get();            
-
+            
         private:
             arx::vector<TimePoint> scenes;
             unsigned long beginTime;       
@@ -43,4 +41,4 @@ namespace Maxy {
             float getLoopValue(unsigned long currentTime) const;
             float getNonLoopValue(unsigned long currentTime) const;
     };
-}
+};
