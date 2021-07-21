@@ -1,43 +1,62 @@
 #pragma once
 
-#include <ArxContainer.h>
+#include <Arduino.h>
 
 namespace Maxy {
     class Function {
         public:
-            struct TimePoint {
-                    unsigned int duration;
-                    float duration_reciprocal;
-                    unsigned int endTime;
-                    // float beginValue;  // goal   
-                    float endValue;                        
-                    float diff;   // difference from the previous value
-                    // unsigned long beginTime;         
+            Function(const float* _points, const size_t _numPoints, const float _initial_value = 0.0) : points(_points), numPoints(_numPoints), initialValue(_initial_value) {};            
+            void begin(const bool _loop = false);
+            float get();      
+            float get(const float ellapsedTime);     
+                        
+            inline size_t getSceneIndex(const float ellapsedTime) const {
+                size_t sceneIndex = 0;
+                size_t nextEndTime = read_array(2 * sceneIndex + 1);
+
+                while(nextEndTime < ellapsedTime) {
+                    sceneIndex++;
+                    
+                    if(numPoints <= sceneIndex && !this->loop) {
+                        return this->numPoints - 1; //returns last scene
+                    }      
+
+                    nextEndTime += read_array(2 * sceneIndex + 1);       
+                }
+                return sceneIndex;
             };
 
-            Function();
-            void add(const float val, const unsigned long duration);
-            void begin(const bool _loop = false);
-            float get();            
-            
+
+            inline size_t getNextScene(const size_t sceneIndex) const {
+                size_t nextScene = sceneIndex + 1;
+
+                if(numPoints < nextScene) {
+                    nextScene = 0; 
+                }
+                
+                return nextScene;
+            }
+
         private:
-            arx::vector<TimePoint> scenes;
-            unsigned long beginTime;       
-            unsigned long totalTime;
+            const float* points;
+            const size_t numPoints;
+            unsigned long beginTime;
             bool loop;
-            using getptr = float (Maxy::Function::*)(const unsigned long)const;
-            getptr funcPtr;
-            
-            size_t getPreviousIndex(const size_t index) const {
-                if(index == 0) {
-                    return scenes.size() - 1;
+            float totalTime;
+            const float initialValue;
+
+            inline float read_array(const size_t index) const {
+                return pgm_read_float(points + index);        
+            }
+
+            inline float getBeginValue(const size_t sceneIndex) const {     
+                if(sceneIndex == 0) {
+                    return 0.0;
                 } else {
-                    return index - 1;
+                    return read_array(2 * (sceneIndex - 1));
                 }
             };
-            size_t getIndex(const unsigned long ellapsedTime) const;
-            bool isInScene(const unsigned long ellapsedTime, const size_t index) const;
-
+                        
             float getLoopValue(unsigned long currentTime) const;
             float getNonLoopValue(unsigned long currentTime) const;
     };

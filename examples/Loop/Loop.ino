@@ -1,6 +1,7 @@
 #include "MaxyFunction.h"
 
-Maxy::Function function;
+PROGMEM const float arr[] = {1.0, 1000, 0.0, 1000};
+Maxy::Function function(arr, 2);
 
 void setup() {
     Serial.begin(115200);
