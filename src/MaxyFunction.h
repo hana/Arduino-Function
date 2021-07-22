@@ -51,7 +51,7 @@ namespace Maxy {
 
             inline float getBeginValue(const size_t sceneIndex) const {     
                 if(sceneIndex == 0) {
-                    return 0.0;
+                    return initialValue;
                 } else {
                     return read_array(2 * (sceneIndex - 1));
                 }

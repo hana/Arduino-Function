@@ -13,8 +13,8 @@ void Function::begin(const bool _loop) {
         totalTime += read_array(2 * i + 1);
     }
 
-    Serial.print(F("Total Time: "));
-    Serial.println(totalTime);
+    // Serial.print(F("Total Time: "));
+    // Serial.println(totalTime);
     beginTime = millis();
 }
 
