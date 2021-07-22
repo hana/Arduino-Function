@@ -43,7 +43,7 @@ namespace Maxy {
             unsigned long beginTime;
             bool loop;
             float totalTime;
-            const float initialValue;
+            float initialValue;
 
             inline float read_array(const size_t index) const {
                 return pgm_read_float(points + index);        

@@ -5,6 +5,10 @@ using namespace Maxy;
 void Function::begin(const bool _loop) {
     loop = _loop;    
 
+    if(loop) {
+        initialValue = read_array(2 * (numPoints - 1));
+    }
+
     for(size_t i = 0; i < numPoints; i++) {
         totalTime += read_array(2 * i + 1);
     }
