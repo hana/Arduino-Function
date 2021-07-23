@@ -9,29 +9,31 @@ void Function::begin(const bool _loop) {
         initialValue = read_array(2 * (numPoints - 1));
     }
 
+    float totalTimef = 0.0;
+    totalTime = 0;
     for(size_t i = 0; i < numPoints; i++) {
-        totalTime += read_array(2 * i + 1);
+        totalTimef += read_array(2 * i + 1);
+        // totalTime += static_cast<unsigned long>(read_array(2 * i + 1));
     }
+    totalTime = static_cast<unsigned long>(totalTimef);
 
-    // Serial.print(F("Total Time: "));
-    // Serial.println(totalTime);
     beginTime = millis();
 }
 
-float Function::getNonLoopValue(unsigned long currentTime) const {
-       
-}
+// float Function::getNonLoopValue(unsigned long currentTime) const {
+//     return 0.0;      
+// }
 
-float Function::getLoopValue(unsigned long currentTime) const {
-
-}
+// float Function::getLoopValue(unsigned long currentTime) const {
+//     return 0.0;
+// }
 
 float Function::get() {        
     if(numPoints == 0) {
         return initialValue;
     }
 
-    float ellapsedTime = static_cast<float>(millis() - beginTime);
+    unsigned long ellapsedTime = millis() - beginTime;
 
     while(totalTime < ellapsedTime) {
         ellapsedTime -= totalTime;

@@ -42,7 +42,8 @@ namespace Maxy {
             const size_t numPoints;
             unsigned long beginTime;
             bool loop;
-            float totalTime;
+            
+            unsigned long totalTime;
             float initialValue;
 
             inline float read_array(const size_t index) const {
@@ -57,7 +58,7 @@ namespace Maxy {
                 }
             };
                         
-            float getLoopValue(unsigned long currentTime) const;
-            float getNonLoopValue(unsigned long currentTime) const;
+            // float getLoopValue(unsigned long currentTime) const;
+            // float getNonLoopValue(unsigned long currentTime) const;
     };
 };
